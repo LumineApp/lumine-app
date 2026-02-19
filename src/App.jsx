@@ -350,39 +350,63 @@ const generateBlueprint = (answers, faceShapeData) => {
   const concern = answers.concern || "eyes";
 
   const browByShape = {
-    Oval:    { arch: "Softly curved arch — your face is naturally balanced. A gentle arch at the outer third of your brow enhances without adding heaviness. Fill only the tail for natural depth.", thickness: "Medium-full thickness. Avoid over-thinning.", product: "Micro-fiber brow pencil + clear setting gel" },
-    Round:   { arch: "A HIGH, angled arch is your secret weapon — it optically lengthens your face. Arch should peak directly above the outer iris, not the center of the eye.", thickness: "Slightly thinner brows add height. Avoid very thick, flat brows.", product: "Angled brow pomade brush for precise high-arch definition" },
-    Square:  { arch: "Soften your angles with a CURVED, rounded arch. Avoid flat, straight brows — they echo and amplify your jaw's squareness.", thickness: "Medium thickness, feathered texture to soften strong bone structure.", product: "Spoolie + tinted brow gel for textured, natural finish" },
-    Heart:   { arch: "Keep arches LOW and SOFT — high arches widen the forehead further. A gentle, rounded arch is ideal. Fill lightly at the inner corner.", thickness: "Medium to thick brows balance a narrow lower face.", product: "Brow soap + spoolie for full, brushed-up texture" },
-    Oblong:  { arch: "FLAT to slightly curved brows add width and interrupt vertical length — exactly what you want. Avoid dramatic peaks or very high arches.", thickness: "Thicker, fuller brows are your best friend here. Build width, not height.", product: "Brow pencil with flat horizontal strokes to build width" },
-    Diamond: { arch: "Moderately curved arches soften your naturally dramatic cheekbones. Not too high, not too flat — aim for balance.", thickness: "Medium-full to complement your strong midface.", product: "Micro-fiber pencil + setting gel in a shade matching your hair" },
+    Oval:    {
+      arch: "A softly curved arch suits your balanced face perfectly. Let your arch peak just past the outer edge of your iris — not too high, not flat. Fill only the tail end for natural depth and shape.",
+      thickness: "Medium-full thickness. Avoid over-thinning — your face shape handles fullness well.",
+      technique: "Every morning after washing your face, use your fingertip to firmly brush your brow hairs straight upward, hold for 5 seconds, then release. Do this daily and your natural brow shape trains itself upward over time — no product needed. This is called brow lamination training and it's free.",
+    },
+    Round:   {
+      arch: "A HIGH, angled arch is your single most powerful tool — it visually stretches your face vertically. The peak should sit directly above your outer iris. Even a slight upward angle makes a dramatic difference.",
+      thickness: "Keep brows slightly thinner to reinforce the vertical lift. Thick, flat brows will widen the face further.",
+      technique: "Stand in front of a mirror and look straight ahead. Place your fingertip at the outer edge of your iris and draw an imaginary vertical line upward — that's exactly where your arch peak should be. Practice drawing to that point every time you groom. Within a week it becomes instinctive and you'll stop over-filling the center, which is what's been flattening your brows.",
+    },
+    Square:  {
+      arch: "Your jaw is strong and angular — your brows need to counter that with a soft, rounded curve. Think of the arch as a gentle dome, not a sharp angle. This is what softens your overall look without losing your strength.",
+      thickness: "Medium thickness with a feathered, textured finish. Hard edges on brows echo your jaw line — avoid them.",
+      technique: "After a shower when skin is warm, use your fingertips to massage your brow area in small circles for 60 seconds. This relaxes the muscle under the brow (frontalis) and trains the hairs to grow in a more natural, rounded direction over time. Do it every morning — it takes one minute and gradually softens the brow's natural set.",
+    },
+    Heart:   {
+      arch: "Keep your arch LOW and gently curved — high arches visually widen an already broad forehead. Think soft and rounded, starting your fill from the middle of the brow outward rather than the inner corner.",
+      thickness: "Medium to full thickness in the body of the brow balances your narrower lower face. Don't overthin.",
+      technique: "Look straight into a mirror. Cover the top half of your face with your hand so you only see from the nose down. Notice how the lower face feels narrow? Your brows job is to not make the top feel wider. Practice drawing your brows with this in mind — start your arch further toward the center than feels natural. Do this mirror check every time you groom until it becomes automatic.",
+    },
+    Oblong:  {
+      arch: "Flat to very slightly curved brows are your best friend — they add horizontal visual weight and interrupt the vertical length of your face. Resist the urge to arch up; keep everything low and wide.",
+      thickness: "Thicker, fuller brows add the horizontal mass your face shape benefits from. Build width, not height.",
+      technique: "Each night before bed, use your clean fingertip to press your brow hairs firmly downward and outward toward your temples, hold for 10 seconds, and release. This trains the hairs to grow flatter and wider over weeks. Flat, wide brows are literally your best facial feature lever — this technique works with your natural growth to get you there without anything.",
+    },
+    Diamond: {
+      arch: "A moderate, balanced curve suits your dramatic cheekbones perfectly. Your face is already striking — your brows just need to complement, not compete. Not too high, not flat. Think classic.",
+      thickness: "Medium-full. Your strong midface can handle substance in the brow.",
+      technique: "Stand back from a mirror — about arm's length — and look at your full face. Your cheekbones are the widest point. Now look at your brows. The goal is for your eye to travel from brow to cheekbone to jaw smoothly. Practice assessing your brows from this distance rather than up close. Most people over-shape from too close and lose the big picture. Make full-face distance your daily brow check habit.",
+    },
   };
 
   const lipByShape = {
-    Oval:    "Your lips are naturally well-proportioned for your face. Enhance the Cupid's bow definition with a lip liner 1 shade deeper than your lip color. A gloss highlight on the center of your lower lip adds beautiful dimension.",
-    Round:   "Slightly overline the upper lip — focus on the peaks of the Cupid's bow to add vertical height. A deeper shade on the outer corners creates a subtle lengthening effect on the overall face.",
-    Square:  "Fuller, softer lip looks balance your strong jaw beautifully. Center-focus application with a glossy topper draws the eye inward. Avoid very dark liner — it can emphasize jaw corners.",
-    Heart:   "Your narrow lower face is balanced by fuller lip coverage. Focus on the lower lip — slightly overline it to add visual width at the bottom third of your face. Avoid heavy Cupid's bow emphasis.",
-    Oblong:  "Wider lip application adds horizontal visual balance. Apply color fully to both lips without heavy contouring. A glossy finish across the entire lip adds width.",
-    Diamond: "Soft, naturally defined lips complement your striking bone structure. A nude-pink or your-lips-but-better shade with subtle gloss keeps lips from competing with your strong cheekbones.",
+    Oval:    { desc: "Your lips are naturally well-proportioned for your face. Focus on defining the Cupid's bow — press your finger firmly along the bow line each morning to stimulate blood flow and naturally deepen its definition over time.", technique: "Press two fingers firmly along your upper lip from corner to corner, then tap the center of your lower lip 20 times. Do this every morning before anything else. It takes 30 seconds, stimulates circulation, and gives your lips a natural flush and subtle plump — no product needed. Think of it as a daily lip wake-up." },
+    Round:   { desc: "For your face shape, vertical lip definition adds length. Focus application from the center outward and let your Cupid's bow peaks be your sharpest point. Avoid filling corner-to-corner equally — it widens.", technique: "Every day, practice smiling slightly while looking in a mirror and notice the natural line of your upper lip at the peaks of the Cupid's bow. Use your fingernail to lightly trace that line — you're training your eye to see your natural lip shape clearly so that when you do apply anything, you apply it precisely to the peaks rather than across the whole lip. Precision beats coverage every time for your shape." },
+    Square:  { desc: "Soft, full lips balance your strong jaw beautifully. The technique is to focus color on the center of both lips first and blend outward — this creates a soft, rounded look that counterbalances angular bone structure.", technique: "Every night before bed, press your lips together firmly for 5 seconds, release, and repeat 10 times. This is a lip muscle exercise that gradually improves the natural fullness and definition of the lip border over weeks. Combined with staying hydrated, this is the single best free technique for your face shape — fuller, softer lips are exactly what balances a square jaw." },
+    Heart:   { desc: "Your lower face is narrow — fuller lower lip coverage creates visual balance. Think of your lower lip as the hero: give it more attention than the upper lip. This draws the eye down and widens the perception of the lower face.", technique: "Each morning, use your clean fingertip to massage your lower lip in circular motions for 30 seconds. This stimulates blood flow specifically to the lower lip, making it appear naturally fuller and more defined throughout the day. Do it right after washing your face — it becomes part of your skincare routine and takes half a minute." },
+    Oblong:  { desc: "For your face shape, horizontal lip width is everything. Apply from corner to corner fully, resist the urge to keep lips small. Your goal is width at the lip line — it adds horizontal balance to the lower face.", technique: "Stand in front of a mirror and practice the 'wide smile' hold: smile as wide as you can with lips slightly parted, hold for 10 seconds, relax, repeat 5 times. Do this daily. It trains the muscles around your mouth to sit wider at rest, which gradually improves your natural lip width and the way your mouth frames the lower face. 60 seconds a day, real results in 3-4 weeks." },
+    Diamond: { desc: "Your bone structure is the star — your lips should be soft and natural, not competing. The technique is restraint: let your lips be themselves, focus on keeping them hydrated and defined at the natural border.", technique: "Every morning, press your lips together and roll them inward slightly, hold for 3 seconds, release. Repeat 10 times. This is a natural lip-plumping technique that brings blood to the surface and defines the lip border without anything applied. For your face shape, naturally healthy, defined lips complement your cheekbones far better than any heavy application would." },
   };
 
   const contourByShape = {
-    Oval:    "Minimal contouring needed — your face is already well-balanced. A light bronzer sweep along the temples and under the cheekbones. Highlighter on the center of the cheekbones only.",
-    Round:   "Create vertical lines: matte bronzer on the sides of the forehead, temples, under the cheekbones (angled downward), and sides of the jaw. Highlight strictly down the center of the face — forehead, nose bridge, center chin. Avoid blush on the apples.",
-    Square:  "Soften the corners: contour at the corners of your forehead and along the full jaw. Avoid sharp cheek contouring. Blush swept high toward the temples creates roundness and softness.",
-    Heart:   "Balance the forehead: dust bronzer lightly across the temples and hairline. Contour the chin subtly to make it appear wider. Place blush lower on the cheeks — not high — to add fullness to the lower face.",
-    Oblong:  "Add width, reduce length: blush horizontally across the apples of the cheeks. A light bronzer on the forehead hairline and on the chin shortens the face. Avoid vertical highlighter strips.",
-    Diamond: "Minimal contour needed at the cheekbones — they're already your strongest feature. A soft contour at the temples and chin balances the shape. Highlighter only on the cupid's bow and brow bone.",
+    Oval:    { desc: "Your face is already balanced — contouring is about enhancing what's there, not correcting anything. Focus shadow under the cheekbones only, and keep highlight strictly on the center of the cheekbones.", technique: "Every morning after moisturizing, use your fingertips to lightly pinch along your cheekbone from ear to nose — just enough to feel the bone. This daily habit trains you to find your exact cheekbone placement, so if you ever do apply any shadow or color, you place it perfectly every single time. Most people contour in the wrong place because they've never mapped their own bone structure by feel." },
+    Round:   { desc: "Your contouring goal is to create the illusion of vertical length. Shadow goes on the sides — temples, sides of forehead, under the cheekbones angled downward, and along the jaw sides. Highlight stays strictly in the center vertical strip.", technique: "Stand in front of a mirror and use two fingers to draw an imaginary vertical line down the center of your face — forehead, nose, lips, chin. Everything inside that line is your highlight zone. Everything outside it is your shadow zone. Practice seeing your face this way every day — center bright, sides receded. This mental map is the entire foundation of contouring for a round face, and once you see it you can never unsee it." },
+    Square:  { desc: "Your goal is to soften the four corners — forehead corners and jaw corners. Shadow at those four points rounds out the angularity. Blush swept diagonally upward toward the temples draws the eye away from the jaw.", technique: "Every morning, place your fingertips at the four corners of your face — hairline corners and jaw corners. Press gently and hold for 5 seconds. This simple mapping ritual trains you to always think of your face structurally and reminds you where to place dimension when you want it. The biggest mistake square-faced people make is blush on the apples — this habit stops it." },
+    Heart:   { desc: "Your forehead is the widest point — shadow across the temples and hairline reduces it. Your chin is the narrowest — any brightening technique at the chin adds visual width. Place color low on the cheeks, not high.", technique: "In the mirror, cover your lower face with your hand and study your forehead. It's likely wider than you realize. Now cover your upper face and study your chin and jaw — narrow. Do this every day for one week. This top-and-bottom assessment trains your eye to balance your face from the bottom up, which is the opposite of what most people instinctively do. Once you see the imbalance clearly, every placement decision you make naturally corrects for it." },
+    Oblong:  { desc: "Width is your goal — horizontal color placement across the cheeks adds visual width. Shadow at the very top of the forehead and bottom of the chin shortens the face. Blush across the apples horizontally is your best move.", technique: "Each morning, look in the mirror and draw an imaginary horizontal line across the widest part of your cheeks. Everything above your brows and below your chin is where you mentally 'cut' the face shorter. Practice thinking of your face as three horizontal sections rather than one long vertical — top, middle, bottom. This horizontal framing mindset changes every placement decision you make and is the foundation of the entire look for your face shape." },
+    Diamond: { desc: "Your cheekbones do the work — don't add to them. Shadow at the temples and along the jaw balances the width of your midface. Any highlight at the center of the forehead and chin adds length where your face narrows.", technique: "Place your fingertips on your cheekbones and trace outward to the widest point. Now trace inward to the temples and down to the jaw. Feel how much narrower those areas are? Practice this daily mapping so you always know exactly where the width is — and where to place anything that recedes it. Your face shape is rare and most people overcorrect it. Knowing your own structure by touch is your best tool." },
   };
 
   const hairByShape = {
-    Oval:    "Lucky you — almost any hairstyle works for your face shape. Center or side parts, curtain bangs, layers, buns. Focus on what expresses your personality rather than correction.",
-    Round:   "Volume at the crown, length past the chin. Side parts are more flattering than center. Avoid chin-length cuts — they cut across the widest part of your face and amplify roundness.",
-    Square:  "Soft, wavy layers or curtain bangs gently round out strong angles. Avoid blunt cuts especially at chin-length. Side-swept styles soften the jaw. Textured waves are ideal.",
-    Heart:   "Volume at the jaw and below — lobs (long bobs), waves, layers from the chin down balance the wider forehead. Side-swept bangs or curtain bangs reduce forehead width. Avoid high updos.",
-    Oblong:  "Width is your goal: waves, curls, or side-parted styles add horizontal volume. Bangs — curtain or side-swept — add width and interrupt the face's length. Avoid very long, straight hair with no volume.",
-    Diamond: "Chin-length styles or longer with volume at the jaw balance your wide cheekbones. Side parts soften the overall face. Avoid very short hair that maximizes cheekbone visibility.",
+    Oval:    { desc: "Almost any style works for your shape — you're not correcting anything, just expressing. The only thing to focus on is whether your hair adds or removes energy from your face.", technique: "Every morning, try parting your hair on a different side than usual and look at your face for 60 seconds before switching back. Do this for 7 days straight. You're training your eye to see how part placement changes the entire frame of your face — which side feels more open, which side feels more balanced. After a week you'll know your optimal part placement by feel rather than habit." },
+    Round:   { desc: "Volume at the crown and length past the chin visually elongates your face. Side parts are consistently more flattering than center. Avoid chin-length cuts — they emphasize the widest part of your face.", technique: "Each morning, blow dry or scrunch the roots at your crown for 60 seconds with your head upside down before flipping back. This single habit builds root lift that lasts the whole day — and crown volume is the single most face-lengthening thing you can do for a round face. No product, no styling tools needed beyond what you already use. Just 60 seconds upside down." },
+    Square:  { desc: "Soft texture and movement soften strong angles. Waves, layers, and side-swept styles are your best friends. Anything with a hard, straight line — blunt cuts, pin-straight styles — amplifies the jaw's angularity.", technique: "After showering, scrunch your hair upward toward your roots with a microfiber towel instead of rubbing it straight down. Then let it air dry without touching it for 20 minutes. This single technique enhances your natural texture and creates soft, gentle movement that softens your jaw line far better than any straight, smooth style. Try it for one week before your next style decision." },
+    Heart:   { desc: "Volume below the ears and at the jaw balances the wider forehead. Chin-length to shoulder-length with movement is your ideal range. Curtain bangs or side-swept bangs break up forehead width immediately.", technique: "Each morning, take a small section of hair on each side of your face and tuck it behind the ear on the upper half, letting it fall free below the ear. This immediately frames the lower face with volume and draws the eye downward — balancing the heart shape without any cut or styling needed. Practice this framing technique daily and notice how much it changes the balance of your face." },
+    Oblong:  { desc: "Width at the sides of your face is the goal. Waves, curls, and side-parted styles that add horizontal volume work best. Curtain bangs or a fringe add visual width and interrupt the face's length immediately.", technique: "Each morning before any styling, cup your hands around the sides of your hair at cheek level and gently press inward, then release. This reminds you to protect and build width at that level rather than letting the hair fall flat. It takes 5 seconds and primes your styling decisions — you'll instinctively avoid sleek, flat styles at the sides and naturally reach for volume there instead." },
+    Diamond: { desc: "Chin-length or longer with volume at the jaw balances your dramatic cheekbones. Side parts soften the overall structure. Avoid very short styles that put your cheekbones front and center with nothing to balance them.", technique: "Stand in front of a mirror and pull your hair back completely for 60 seconds. Study your face with nothing framing it — your cheekbones are fully visible and the face shape is clear. Now let your hair fall. The contrast shows you exactly what your hair is doing for your face. Do this once a week as a check-in. People with Diamond faces who understand their structure make far better style decisions than those who just follow trends." },
   };
 
   const eventTips = {
@@ -406,14 +430,12 @@ const generateBlueprint = (answers, faceShapeData) => {
     olive:   "Warm nude-pinks, mocha, or earthy rose",
   };
 
-  const browData = browByShape[shape] || browByShape["Oval"];
-
   return {
     profile: {
       type: `${shape} Face · ${goal === "glam" ? "Editorial" : goal === "sculpt" ? "Sculptural" : goal === "skin" ? "Luminous" : "Refined"} ${tone === "cool" ? "Clarity" : tone === "warm" ? "Warmth" : tone === "olive" ? "Depth" : "Balance"}`,
       archetype: `The ${shape === "Heart" ? "Romantic" : shape === "Square" ? "Bold" : shape === "Round" ? "Soft" : shape === "Diamond" ? "Rare" : shape === "Oblong" ? "Elegant" : "Versatile"} ${goal === "glam" ? "Muse" : goal === "skin" ? "Natural" : goal === "sculpt" ? "Sculptor" : "Beauty"}`,
     },
-    brow: browData,
+    brow: browByShape[shape] || browByShape["Oval"],
     lip: lipByShape[shape] || lipByShape["Oval"],
     contour: contourByShape[shape] || contourByShape["Oval"],
     hair: hairByShape[shape] || hairByShape["Oval"],
@@ -511,8 +533,10 @@ export default function BeautyApp() {
     }, 4800);
   };
 
- const handlePayment = () => {
-    window.open("https://buy.stripe.com/test_eVq00lfzI8WO4TTbZofw400", "_blank");
+  const handlePayment = () => {
+    if (!email || !cardNum || !cardExpiry || !cardCvc) return;
+    setStage("processing");
+    setTimeout(() => setStage("blueprint"), 2200);
   };
 
   const formatCardNum = (v) => v.replace(/\D/g,"").replace(/(.{4})/g,"$1 ").trim().slice(0,19);
@@ -792,39 +816,43 @@ export default function BeautyApp() {
         )}
 
         {/* ══ PAYMENT ══════════════════════════════════════════════════════════ */}
-      
-         {stage === "payment" && (
-  <div className="payment-wrapper">
-    <div style={{marginBottom:24}}>
-      <div className="hero-eyebrow">One-time Payment</div>
-      <h2 className="section-title">Unlock your blueprint</h2>
-      {faceShape && <p style={{fontSize:13,color:"var(--subtle)",marginTop:6}}>{faceShape.shape} face · {analysis?.profile.archetype}</p>}
-    </div>
-    <div className="order-summary fade-up">
-      <div className="order-line"><span>Full Enhancement Blueprint</span><span style={{textDecoration:"line-through",color:"var(--subtle)"}}>$49</span></div>
-      <div className="order-line"><span>Launch discount</span><span style={{color:"var(--rose)"}}>−$30</span></div>
-      <div className="order-line total"><span>Total today</span><span>$19.00</span></div>
-    </div>
-    <div style={{margin:"0 24px 20px",background:"var(--mist)",borderRadius:16,padding:"20px"}}>
-      <div style={{fontSize:13,color:"var(--subtle)",lineHeight:1.6,marginBottom:16}}>
-        You'll be taken to Stripe's secure checkout. After payment, come back here to access your full blueprint.
-      </div>
-      <div className="blueprint-items">
-        {[`${faceShape?.shape||"Personalized"} face-specific brow guide`,"Lip mapping for your proportions","Contour strategy for your shape","Hair framing recommendations","Personalized color palette","Event-specific tips"].map((item,i) => (
-          <div key={i} className="blueprint-item">
-            <div className="blueprint-check">✓</div>{item}
+        {stage === "payment" && (
+          <div className="payment-wrapper">
+            <div style={{marginBottom:24}}>
+              <div className="hero-eyebrow">Secure Checkout</div>
+              <h2 className="section-title">Unlock your blueprint</h2>
+              {faceShape && <p style={{fontSize:13,color:"var(--subtle)",marginTop:6}}>{faceShape.shape} face · {analysis?.profile.archetype}</p>}
+            </div>
+            <div className="order-summary fade-up">
+              <div className="order-line"><span>Full Enhancement Blueprint</span><span style={{textDecoration:"line-through",color:"var(--subtle)"}}>$49</span></div>
+              <div className="order-line"><span>Launch discount</span><span style={{color:"var(--rose)"}}>−$30</span></div>
+              <div className="order-line total"><span>Total today</span><span>$19.00</span></div>
+            </div>
+            <div className="stripe-form fade-up fade-up-2">
+              <label className="form-label">Email</label>
+              <input className="form-input" type="email" placeholder="you@email.com" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+              <label className="form-label">Card Number</label>
+              <input className="form-input" type="text" placeholder="4242 4242 4242 4242" value={cardNum} onChange={(e)=>setCardNum(formatCardNum(e.target.value))} maxLength={19}/>
+              <div className="form-row">
+                <div>
+                  <label className="form-label">Expiry</label>
+                  <input className="form-input" type="text" placeholder="MM/YY" value={cardExpiry} onChange={(e)=>setCardExpiry(formatExpiry(e.target.value))} maxLength={5}/>
+                </div>
+                <div>
+                  <label className="form-label">CVC</label>
+                  <input className="form-input" type="text" placeholder="123" value={cardCvc} onChange={(e)=>setCardCvc(e.target.value.replace(/\D/g,"").slice(0,3))} maxLength={3}/>
+                </div>
+              </div>
+              <div className="stripe-badge">🔒 Secured by Stripe · 256-bit SSL</div>
+            </div>
+            <button className="btn-gold fade-up fade-up-3" onClick={handlePayment} style={{opacity:email&&cardNum&&cardExpiry&&cardCvc?1:0.6}}>
+              Pay $19 & Unlock Blueprint →
+            </button>
+            <div className="btn-sub">30-day money-back guarantee · Instant access</div>
+            <button className="btn-outline" onClick={() => setStage("results")}>← Go back</button>
+            <div className="small-print">Digital products delivered instantly. 30-day guarantee applies.</div>
           </div>
-        ))}
-      </div>
-    </div>
-    <button className="btn-gold fade-up" onClick={handlePayment}>
-      🔒 Pay $19 Securely via Stripe →
-    </button>
-    <div className="btn-sub">Powered by Stripe · 30-day guarantee · Instant access</div>
-    <button className="btn-outline" onClick={() => setStage("results")}>← Go back</button>
-    <div className="small-print">You'll be redirected to Stripe's secure checkout page.</div>
-  </div>
-)}
+        )}
 
         {/* ══ PROCESSING ═══════════════════════════════════════════════════════ */}
         {stage === "processing" && (
@@ -861,17 +889,17 @@ export default function BeautyApp() {
             <div className="blueprint-section fade-up fade-up-1">
               <div className="blueprint-section-title">🏹 Brow Architecture</div>
               <div className="tip-card">
-                <div className="tip-title">Arch Placement for {faceShape?.shape||"Your"} Face</div>
+                <div className="tip-title">Arch Placement for {faceShape?.shape || "Your"} Face</div>
                 <div className="tip-body">{analysis.brow.arch}</div>
-                <span className="tip-highlight">Face-shape specific</span>
               </div>
               <div className="tip-card">
                 <div className="tip-title">Thickness & Texture</div>
                 <div className="tip-body">{analysis.brow.thickness}</div>
               </div>
-              <div className="tip-card">
-                <div className="tip-title">Recommended Product</div>
-                <div className="tip-body">{analysis.brow.product}</div>
+              <div className="tip-card" style={{borderLeftColor:"var(--gold)"}}>
+                <div className="tip-title">Your Daily Technique</div>
+                <div className="tip-body">{analysis.brow.technique}</div>
+                <span className="tip-highlight">Do this every morning</span>
               </div>
             </div>
 
@@ -879,8 +907,13 @@ export default function BeautyApp() {
             <div className="blueprint-section fade-up fade-up-2">
               <div className="blueprint-section-title">💋 Lip Mapping</div>
               <div className="tip-card">
-                <div className="tip-title">Balance Strategy for {faceShape?.shape||"Your"} Face</div>
-                <div className="tip-body">{analysis.lip}</div>
+                <div className="tip-title">Balance Strategy for {faceShape?.shape || "Your"} Face</div>
+                <div className="tip-body">{analysis.lip.desc}</div>
+              </div>
+              <div className="tip-card" style={{borderLeftColor:"var(--gold)"}}>
+                <div className="tip-title">Your Daily Technique</div>
+                <div className="tip-body">{analysis.lip.technique}</div>
+                <span className="tip-highlight">30 seconds each morning</span>
               </div>
               <div className="tip-card">
                 <div className="tip-title">Your Ideal Shade Range</div>
@@ -895,9 +928,13 @@ export default function BeautyApp() {
             <div className="blueprint-section fade-up fade-up-2">
               <div className="blueprint-section-title">🎭 Contour & Structure</div>
               <div className="tip-card">
-                <div className="tip-title">{faceShape?.shape||"Personalized"} Contouring Strategy</div>
-                <div className="tip-body">{analysis.contour}</div>
-                <span className="tip-highlight">Sculpting technique</span>
+                <div className="tip-title">{faceShape?.shape || "Personalized"} Placement Strategy</div>
+                <div className="tip-body">{analysis.contour.desc}</div>
+              </div>
+              <div className="tip-card" style={{borderLeftColor:"var(--gold)"}}>
+                <div className="tip-title">Your Daily Technique</div>
+                <div className="tip-body">{analysis.contour.technique}</div>
+                <span className="tip-highlight">Do this every morning</span>
               </div>
             </div>
 
@@ -905,8 +942,13 @@ export default function BeautyApp() {
             <div className="blueprint-section fade-up fade-up-3">
               <div className="blueprint-section-title">💇 Hair Framing</div>
               <div className="tip-card">
-                <div className="tip-title">Best Styles for {faceShape?.shape||"Your"} Face Shape</div>
-                <div className="tip-body">{analysis.hair}</div>
+                <div className="tip-title">Best Styles for {faceShape?.shape || "Your"} Face Shape</div>
+                <div className="tip-body">{analysis.hair.desc}</div>
+              </div>
+              <div className="tip-card" style={{borderLeftColor:"var(--gold)"}}>
+                <div className="tip-title">Your Daily Technique</div>
+                <div className="tip-body">{analysis.hair.technique}</div>
+                <span className="tip-highlight">Takes under 60 seconds</span>
               </div>
             </div>
 
