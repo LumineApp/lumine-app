@@ -430,6 +430,48 @@ const generateBlueprint = (answers, faceShapeData) => {
     olive:   "Warm nude-pinks, mocha, or earthy rose",
   };
 
+  // ── SKINCARE by face shape ──
+  // Every face shape has specific pressure points, drainage patterns,
+  // and tension zones — these techniques work with that structure.
+  const skincareByShape = {
+    Oval: {
+      focus: "Balanced circulation & lymphatic maintenance",
+      desc: "Your face is proportionally balanced, which means your skincare goal is maintenance and glow rather than correction. The key technique for you is stimulating overall circulation so your skin looks lit-from-within rather than flat.",
+      morning: "Each morning after washing, use your knuckles to gently roll outward from the center of your face to your ears — across your forehead, cheeks, and jawline. Spend 60 seconds total. This manually moves lymphatic fluid toward the drainage points near your ears and reduces any overnight puffiness. Your skin will look noticeably clearer and more awake immediately.",
+      evening: "Each evening before bed, press three fingers flat against each cheek and hold still for 10 seconds, then release. Repeat on the forehead and chin. This acupressure technique activates skin cell regeneration at the pressure points most active during sleep. It takes 90 seconds and directly improves skin texture over time with zero product.",
+    },
+    Round: {
+      focus: "Lymphatic drainage to define & depuff",
+      desc: "Round faces naturally retain fluid more visibly, especially overnight. The single most effective thing you can do for your skin and the appearance of your face shape is a consistent daily lymphatic drainage routine — it defines your features without anything applied.",
+      morning: "Every morning, use two fingers to stroke firmly from the center of your chin outward along your jaw to just below the ear. Then stroke from the corners of your nose outward across your cheeks to the same point. Do each stroke 5 times on each side. This specific drainage direction moves excess fluid out of the face through the lymph nodes below the ear. Done daily, it visibly reduces puffiness and defines the jaw over weeks.",
+      evening: "Before bed, tilt your head slightly back and use flat fingers to stroke downward along the sides of your neck from ear to collarbone — 10 strokes each side. This clears the lymph drainage pathway so your morning routine works twice as effectively. These two techniques together are the closest thing to a natural facial reshaping tool that exists.",
+    },
+    Square: {
+      focus: "Jaw tension release & softening",
+      desc: "Square-faced people almost universally hold tension in the jaw — most without realizing it. This tension causes the masseter muscle (the jaw muscle) to enlarge over time, making the jaw appear wider and harder. Daily release work is the most powerful skincare technique for your face shape.",
+      morning: "Place your thumbs just below your cheekbones and your fingers along your jaw. Open your mouth slightly and press your thumbs upward into the muscle — you'll feel a tender spot. Hold for 10 seconds, breathe, release. Move along the jaw doing this in 3 spots. This releases masseter tension that's been building overnight. People who do this daily for 30 days consistently report a softer, less angular jawline.",
+      evening: "Place your palm flat against your jaw on each side and apply gentle inward pressure while slowly opening and closing your mouth 5 times. This masseter release at the end of the day unwinds tension accumulated during the day — especially if you grind or clench. It takes 60 seconds and is the single most effective technique for softening the appearance of a square jaw over time.",
+    },
+    Heart: {
+      focus: "Forehead tension release & chin circulation",
+      desc: "Heart-shaped faces tend to carry tension across the forehead — furrowing, squinting, and stress all concentrate there. This tension creates lines earlier and can make the forehead appear wider. The secondary focus is stimulating circulation in the narrower chin and jaw area.",
+      morning: "Each morning, place all four fingers flat on your forehead and press firmly while slowly smoothing outward toward your temples. Repeat 5 times. Then place two fingers on each side of your chin and make small circular massage movements for 20 seconds. The forehead smoothing releases tension lines before they set for the day. The chin massage stimulates circulation in the area that benefits your face shape most — adding a subtle fullness to the lower face.",
+      evening: "Before bed, pinch gently along your eyebrows from inner to outer corner, holding each pinch for 2 seconds. Do this 3 times across each brow. This releases the frontalis muscle tension that accumulates in the forehead throughout the day, directly reducing the horizontal lines and the tightness that makes the forehead look wider. 60 seconds, major long-term payoff.",
+    },
+    Oblong: {
+      focus: "Horizontal circulation & cheek fullness",
+      desc: "For your face shape, skincare techniques that build horizontal circulation and maintain cheek fullness work with your structure rather than against it. The goal is to keep the mid-face looking full and wide, which naturally shortens the perception of the face's length.",
+      morning: "Every morning, use your fingertips to tap firmly across both cheeks simultaneously — from the nose outward — for 30 seconds. This tapping technique stimulates blood flow specifically in the cheek area, bringing natural color and fullness to the midface. It's the equivalent of a light blush but from within your skin. Done daily, it maintains the cheek fullness that is most flattering for your face shape.",
+      evening: "Before bed, place your palms flat against your cheeks and apply gentle inward pressure — as if you're cupping your face — and hold for 30 seconds while breathing slowly. This gentle compression stimulates collagen production in the cheek area and reduces overnight fluid loss from the midface. Over weeks, it maintains the natural fullness that keeps your face shape looking its best.",
+    },
+    Diamond: {
+      focus: "Cheekbone definition & temple circulation",
+      desc: "Your cheekbones are already your most striking feature — the skincare goal is keeping the skin over them clear, firm, and luminous. The secondary focus is the temples and forehead, which are narrower and benefit from circulation work.",
+      morning: "Each morning, use your knuckles to roll firmly along the cheekbone from the nose outward to the ear — 5 slow rolls on each side. This stimulates the skin directly over your strongest feature, keeping it firm and clear. Then use your fingertips to make small circles at your temples for 20 seconds. Temple circulation directly affects how bright and open the upper face looks — important for balancing your wide midface.",
+      evening: "Before bed, press your index fingers firmly into the hollow just below each cheekbone and hold for 10 seconds. This acupressure point (ST3 in facial acupressure) is directly connected to skin clarity and cheekbone definition. Release, then stroke upward from below the cheekbone to above it 5 times on each side. This lifting stroke maintains the structural appearance of your cheekbones over time.",
+    },
+  };
+
   return {
     profile: {
       type: `${shape} Face · ${goal === "glam" ? "Editorial" : goal === "sculpt" ? "Sculptural" : goal === "skin" ? "Luminous" : "Refined"} ${tone === "cool" ? "Clarity" : tone === "warm" ? "Warmth" : tone === "olive" ? "Depth" : "Balance"}`,
@@ -439,6 +481,7 @@ const generateBlueprint = (answers, faceShapeData) => {
     lip: lipByShape[shape] || lipByShape["Oval"],
     contour: contourByShape[shape] || contourByShape["Oval"],
     hair: hairByShape[shape] || hairByShape["Oval"],
+    skincare: skincareByShape[shape] || skincareByShape["Oval"],
     eventTips: eventTips[event] || eventTips["photo"],
     colorPalette: palette[tone] || palette["neutral"],
     lipShade: lipShade[tone] || lipShade["neutral"],
@@ -787,7 +830,7 @@ export default function BeautyApp() {
                   <div className="was-price">Usually $49</div>
                 </div>
                 <div className="blueprint-items">
-                  {[`${faceShape?.shape||"Personalized"} face-specific brow guide`,"Lip mapping for your proportions","Contour strategy for your shape","Hair framing recommendations","Personalized color palette","Event-specific tips","Downloadable PDF report"].map((item,i) => (
+                  {[`${faceShape?.shape||"Personalized"} face-specific brow guide`,"Lip mapping for your proportions","Contour strategy for your shape","Daily skincare ritual & techniques","Hair framing recommendations","Personalized color palette","Event-specific tips","Downloadable PDF report"].map((item,i) => (
                     <div key={i} className="blueprint-item">
                       <div className="blueprint-check">✓</div>{item}
                     </div>
@@ -949,6 +992,25 @@ export default function BeautyApp() {
                 <div className="tip-title">Your Daily Technique</div>
                 <div className="tip-body">{analysis.hair.technique}</div>
                 <span className="tip-highlight">Takes under 60 seconds</span>
+              </div>
+            </div>
+
+            {/* SKINCARE */}
+            <div className="blueprint-section fade-up fade-up-3">
+              <div className="blueprint-section-title">🌿 Skincare Ritual</div>
+              <div className="tip-card">
+                <div className="tip-title">Your Skin Focus — {analysis.skincare.focus}</div>
+                <div className="tip-body">{analysis.skincare.desc}</div>
+              </div>
+              <div className="tip-card" style={{borderLeftColor:"var(--gold)"}}>
+                <div className="tip-title">Morning Technique · 60 seconds</div>
+                <div className="tip-body">{analysis.skincare.morning}</div>
+                <span className="tip-highlight">Do before anything else</span>
+              </div>
+              <div className="tip-card" style={{borderLeftColor:"var(--gold)"}}>
+                <div className="tip-title">Evening Technique · 90 seconds</div>
+                <div className="tip-body">{analysis.skincare.evening}</div>
+                <span className="tip-highlight">Do before bed</span>
               </div>
             </div>
 
