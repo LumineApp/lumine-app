@@ -233,7 +233,7 @@ const QUIZ_QUESTIONS = [
     ],
   },
   {
-    id: "routine", step: "Step 6 of 6",
+    id: "routine", step: "Step 6 of 7",
     title: "Your current makeup routine?",
     subtitle: "We adjust recommendations to your level.",
     options: [
@@ -241,6 +241,17 @@ const QUIZ_QUESTIONS = [
       { emoji: "🎨", label: "5-min basics", desc: "BB cream, mascara", value: "basic" },
       { emoji: "🖌️", label: "Full routine", desc: "Foundation, contour, etc.", value: "full" },
       { emoji: "🏆", label: "Makeup lover", desc: "Anything goes", value: "expert" },
+    ],
+  },
+  {
+    id: "skin", step: "Step 7 of 7",
+    title: "How would you describe your skin right now?",
+    subtitle: "Your skincare ritual will be built around this.",
+    options: [
+      { emoji: "🔴", label: "Breakout-prone", desc: "Active acne or frequent breakouts", value: "acne" },
+      { emoji: "💧", label: "Dry & tight", desc: "Flaky, dull, or dehydrated", value: "dry" },
+      { emoji: "✨", label: "Oily & congested", desc: "Shine, pores, blackheads", value: "oily" },
+      { emoji: "🌸", label: "Sensitive", desc: "Redness, reactive, or uneven", value: "sensitive" },
     ],
   },
 ];
@@ -430,9 +441,40 @@ const generateBlueprint = (answers, faceShapeData) => {
     olive:   "Warm nude-pinks, mocha, or earthy rose",
   };
 
-  // ── SKINCARE by face shape ──
-  // Every face shape has specific pressure points, drainage patterns,
-  // and tension zones — these techniques work with that structure.
+  const skin = answers.skin || "oily";
+
+  // ── SKIN CONCERN techniques — layered on top of face shape routine ──
+  const skinConcernTechniques = {
+    acne: {
+      label: "Breakout-Prone Skin",
+      icon: "🔴",
+      overview: "Breakouts are almost always a combination of bacteria, inflammation, and clogged pores — and most people accidentally make all three worse with heavy touch and product overload. The techniques below reduce all three with zero product.",
+      technique1: "The ice cube reset: every morning, wrap a single ice cube in a thin cloth and press it against any active breakout for 30 seconds, then move on. Do not rub — just press and hold. Cold constricts blood vessels, reduces the inflammation that makes spots visible, and shrinks the pore temporarily. It won't cure acne but it visibly reduces the redness and size of active spots within minutes. Free, fast, and genuinely effective.",
+      technique2: "The no-touch rule practice: each evening, consciously count how many times you touch your face. Most breakout-prone people touch their face 200-400 times per day without realizing it — transferring bacteria each time. Set a phone reminder for 9pm that just says 'how many times did you touch your face today?' This awareness habit alone reduces breakouts significantly within two weeks. No product has a better ROI than this.",
+    },
+    dry: {
+      label: "Dry & Dehydrated Skin",
+      icon: "💧",
+      overview: "Dry skin loses moisture faster than it can replenish it — the techniques below focus on stimulating your skin's own oil production and locking in what's already there, using nothing but pressure and warmth.",
+      technique1: "The warmth press: every morning after washing your face, immediately press your warm palms flat against your cheeks and hold for 20 seconds. The warmth from your hands stimulates sebaceous gland activity — your skin's natural moisturizer — right at the start of the day. Do this before applying anything. Over time it trains your skin to produce more of its own moisture rather than becoming dependent on product.",
+      technique2: "The circulation tap: each evening, use all your fingertips to tap rapidly across your entire face for 60 seconds — forehead, cheeks, chin, nose. Light, quick taps. This stimulates blood flow to the skin's surface, which delivers oxygen and nutrients directly to skin cells overnight when regeneration is most active. People with dry skin who do this nightly consistently see improved texture and glow within 2 weeks.",
+    },
+    oily: {
+      label: "Oily & Congested Skin",
+      icon: "✨",
+      overview: "Oily skin overproduces sebum — often as a response to being stripped too aggressively. The techniques below work with your skin's oil balance rather than fighting it, which is what most products get wrong.",
+      technique1: "The gentle blot technique: instead of washing your face mid-day when it gets oily, use a clean finger to gently press — not wipe — any oily areas. Then leave it alone. Wiping stimulates more oil production as the skin compensates. Pressing removes the surface oil without signaling the skin to produce more. Do this instead of touching, wiping, or washing mid-day and notice your skin producing less oil within a week.",
+      technique2: "The cold water finish: every morning and evening, end your face wash with 10 seconds of the coldest water you can stand, splashed directly on your face. Cold water tightens pores temporarily and signals the skin to reduce oil production. Done consistently twice daily, it's one of the most effective free techniques for managing oiliness long-term. Most people skip this step — it makes a measurable difference.",
+    },
+    sensitive: {
+      label: "Sensitive & Reactive Skin",
+      icon: "🌸",
+      overview: "Sensitive skin has a compromised barrier — it reacts to things that wouldn't affect other skin types. The techniques below focus on strengthening the barrier and reducing reactivity through gentle, consistent stimulation.",
+      technique1: "The gentle upward stroke: every morning, use your ring finger (the weakest finger — important for sensitive skin) to stroke upward from your chin to your forehead in slow, deliberate motions across each zone of your face. 3 strokes per zone, always upward. The ring finger exerts the least pressure naturally, and upward strokes lift rather than drag the skin. This gentle stimulation builds skin resilience over time without triggering reactivity.",
+      technique2: "The temperature check habit: each evening before your routine, run the back of your hand under both cold and warm water and notice which feels immediately soothing. Use that temperature for your face wash that night. Sensitive skin's reactivity often spikes when temperature is mismatched — either too hot or too cold. Building this awareness as a daily habit reduces the number of 'bad skin days' significantly over time.",
+    },
+  };
+
   const skincareByShape = {
     Oval: {
       focus: "Balanced circulation & lymphatic maintenance",
@@ -482,6 +524,7 @@ const generateBlueprint = (answers, faceShapeData) => {
     contour: contourByShape[shape] || contourByShape["Oval"],
     hair: hairByShape[shape] || hairByShape["Oval"],
     skincare: skincareByShape[shape] || skincareByShape["Oval"],
+    skinConcern: skinConcernTechniques[skin] || skinConcernTechniques["oily"],
     eventTips: eventTips[event] || eventTips["photo"],
     colorPalette: palette[tone] || palette["neutral"],
     lipShade: lipShade[tone] || lipShade["neutral"],
@@ -998,6 +1041,8 @@ export default function BeautyApp() {
             {/* SKINCARE */}
             <div className="blueprint-section fade-up fade-up-3">
               <div className="blueprint-section-title">🌿 Skincare Ritual</div>
+
+              {/* Face shape foundation */}
               <div className="tip-card">
                 <div className="tip-title">Your Skin Focus — {analysis.skincare.focus}</div>
                 <div className="tip-body">{analysis.skincare.desc}</div>
@@ -1011,6 +1056,35 @@ export default function BeautyApp() {
                 <div className="tip-title">Evening Technique · 90 seconds</div>
                 <div className="tip-body">{analysis.skincare.evening}</div>
                 <span className="tip-highlight">Do before bed</span>
+              </div>
+
+              {/* Skin concern layer */}
+              <div style={{
+                background: "linear-gradient(135deg, var(--deep), #5C3D28)",
+                borderRadius: 14,
+                padding: "16px 18px",
+                marginBottom: 10,
+                color: "white",
+              }}>
+                <div style={{fontSize:10,letterSpacing:"0.2em",textTransform:"uppercase",opacity:0.6,marginBottom:6}}>
+                  Your Skin Concern
+                </div>
+                <div style={{fontSize:15,fontWeight:500,marginBottom:8}}>
+                  {analysis.skinConcern.icon} {analysis.skinConcern.label}
+                </div>
+                <div style={{fontSize:13,opacity:0.8,lineHeight:1.6}}>
+                  {analysis.skinConcern.overview}
+                </div>
+              </div>
+              <div className="tip-card" style={{borderLeftColor:"var(--rose)"}}>
+                <div className="tip-title">Technique 1 — For {analysis.skinConcern.label}</div>
+                <div className="tip-body">{analysis.skinConcern.technique1}</div>
+                <span className="tip-highlight">High impact</span>
+              </div>
+              <div className="tip-card" style={{borderLeftColor:"var(--rose)"}}>
+                <div className="tip-title">Technique 2 — For {analysis.skinConcern.label}</div>
+                <div className="tip-body">{analysis.skinConcern.technique2}</div>
+                <span className="tip-highlight">Daily habit</span>
               </div>
             </div>
 
