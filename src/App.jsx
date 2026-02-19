@@ -511,10 +511,8 @@ export default function BeautyApp() {
     }, 4800);
   };
 
-  const handlePayment = () => {
-    if (!email || !cardNum || !cardExpiry || !cardCvc) return;
-    setStage("processing");
-    setTimeout(() => setStage("blueprint"), 2200);
+ const handlePayment = () => {
+    window.open("https://buy.stripe.com/test_eVq00lfzI8WO4TTbZofw400", "_blank");
   };
 
   const formatCardNum = (v) => v.replace(/\D/g,"").replace(/(.{4})/g,"$1 ").trim().slice(0,19);
@@ -794,43 +792,39 @@ export default function BeautyApp() {
         )}
 
         {/* ══ PAYMENT ══════════════════════════════════════════════════════════ */}
-        {stage === "payment" && (
-          <div className="payment-wrapper">
-            <div style={{marginBottom:24}}>
-              <div className="hero-eyebrow">Secure Checkout</div>
-              <h2 className="section-title">Unlock your blueprint</h2>
-              {faceShape && <p style={{fontSize:13,color:"var(--subtle)",marginTop:6}}>{faceShape.shape} face · {analysis?.profile.archetype}</p>}
-            </div>
-            <div className="order-summary fade-up">
-              <div className="order-line"><span>Full Enhancement Blueprint</span><span style={{textDecoration:"line-through",color:"var(--subtle)"}}>$49</span></div>
-              <div className="order-line"><span>Launch discount</span><span style={{color:"var(--rose)"}}>−$30</span></div>
-              <div className="order-line total"><span>Total today</span><span>$19.00</span></div>
-            </div>
-            <div className="stripe-form fade-up fade-up-2">
-              <label className="form-label">Email</label>
-              <input className="form-input" type="email" placeholder="you@email.com" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-              <label className="form-label">Card Number</label>
-              <input className="form-input" type="text" placeholder="4242 4242 4242 4242" value={cardNum} onChange={(e)=>setCardNum(formatCardNum(e.target.value))} maxLength={19}/>
-              <div className="form-row">
-                <div>
-                  <label className="form-label">Expiry</label>
-                  <input className="form-input" type="text" placeholder="MM/YY" value={cardExpiry} onChange={(e)=>setCardExpiry(formatExpiry(e.target.value))} maxLength={5}/>
-                </div>
-                <div>
-                  <label className="form-label">CVC</label>
-                  <input className="form-input" type="text" placeholder="123" value={cardCvc} onChange={(e)=>setCardCvc(e.target.value.replace(/\D/g,"").slice(0,3))} maxLength={3}/>
-                </div>
-              </div>
-              <div className="stripe-badge">🔒 Secured by Stripe · 256-bit SSL</div>
-            </div>
-            <button className="btn-gold fade-up fade-up-3" onClick={handlePayment} style={{opacity:email&&cardNum&&cardExpiry&&cardCvc?1:0.6}}>
-              Pay $19 & Unlock Blueprint →
-            </button>
-            <div className="btn-sub">30-day money-back guarantee · Instant access</div>
-            <button className="btn-outline" onClick={() => setStage("results")}>← Go back</button>
-            <div className="small-print">Digital products delivered instantly. 30-day guarantee applies.</div>
+      
+         {stage === "payment" && (
+  <div className="payment-wrapper">
+    <div style={{marginBottom:24}}>
+      <div className="hero-eyebrow">One-time Payment</div>
+      <h2 className="section-title">Unlock your blueprint</h2>
+      {faceShape && <p style={{fontSize:13,color:"var(--subtle)",marginTop:6}}>{faceShape.shape} face · {analysis?.profile.archetype}</p>}
+    </div>
+    <div className="order-summary fade-up">
+      <div className="order-line"><span>Full Enhancement Blueprint</span><span style={{textDecoration:"line-through",color:"var(--subtle)"}}>$49</span></div>
+      <div className="order-line"><span>Launch discount</span><span style={{color:"var(--rose)"}}>−$30</span></div>
+      <div className="order-line total"><span>Total today</span><span>$19.00</span></div>
+    </div>
+    <div style={{margin:"0 24px 20px",background:"var(--mist)",borderRadius:16,padding:"20px"}}>
+      <div style={{fontSize:13,color:"var(--subtle)",lineHeight:1.6,marginBottom:16}}>
+        You'll be taken to Stripe's secure checkout. After payment, come back here to access your full blueprint.
+      </div>
+      <div className="blueprint-items">
+        {[`${faceShape?.shape||"Personalized"} face-specific brow guide`,"Lip mapping for your proportions","Contour strategy for your shape","Hair framing recommendations","Personalized color palette","Event-specific tips"].map((item,i) => (
+          <div key={i} className="blueprint-item">
+            <div className="blueprint-check">✓</div>{item}
           </div>
-        )}
+        ))}
+      </div>
+    </div>
+    <button className="btn-gold fade-up" onClick={handlePayment}>
+      🔒 Pay $19 Securely via Stripe →
+    </button>
+    <div className="btn-sub">Powered by Stripe · 30-day guarantee · Instant access</div>
+    <button className="btn-outline" onClick={() => setStage("results")}>← Go back</button>
+    <div className="small-print">You'll be redirected to Stripe's secure checkout page.</div>
+  </div>
+)}
 
         {/* ══ PROCESSING ═══════════════════════════════════════════════════════ */}
         {stage === "processing" && (
