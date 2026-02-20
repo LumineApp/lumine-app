@@ -506,11 +506,9 @@ export default function BeautyApp() {
     },4800);
   };
 
-  const handlePayment=()=>{
-    // Save blueprint data to sessionStorage so we can restore it after redirect
-    sessionStorage.setItem("lumine_analysis", JSON.stringify(analysis));
-    sessionStorage.setItem("lumine_faceShape", JSON.stringify(faceShape));
-    sessionStorage.setItem("lumine_answers", JSON.stringify(answers));
+const savedAnalysis   = JSON.parse(sessionStorage.getItem("lumine_analysis"));
+const savedFaceShape  = JSON.parse(sessionStorage.getItem("lumine_faceShape"));
+const savedAnswers    = JSON.parse(sessionStorage.getItem("lumine_answers"));
     const successUrl = encodeURIComponent(window.location.origin + "?paid=true");
     window.location.href = `https://buy.stripe.com/test_eVq00lfzI8WO4TTbZofw400?success_url=${successUrl}`;
   };
@@ -937,4 +935,3 @@ export default function BeautyApp() {
       </div>
     </>
   );
-}
