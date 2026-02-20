@@ -368,24 +368,28 @@ const generateBlueprint = (answers, faceShapeData) => {
     olive:"Warm nude-pinks, mocha, or earthy rose",
   };
 
-  // ── REAL METRICS from landmark data, all capped at 50 ──
+  // ── REAL METRICS from landmark data — floor 50, no ceiling ──
   let symmetryScore, shapeClarity, enhancementPotential;
   if (faceShapeData) {
     const m = faceShapeData.measurements;
+    // Symmetry: how close jaw-to-cheekbone ratio is to ideal 0.75
     const jawToCheek   = m["Jaw Width"] / m["Cheekbone Width"];
     const symmetryRaw  = 1 - Math.abs(jawToCheek - 0.75);
-    symmetryScore      = Math.min(50, Math.max(5, Math.round(symmetryRaw * 48)));
+    symmetryScore      = Math.max(50, Math.round(symmetryRaw * 100));
+    // Shape clarity: variance between measurements = more distinct shape
     const vals         = Object.values(m);
     const avg          = vals.reduce((a,b)=>a+b,0)/vals.length;
     const variance     = vals.reduce((a,b)=>a+Math.abs(b-avg),0)/vals.length;
-    shapeClarity       = Math.min(50, Math.max(5, Math.round((variance/20)*50)));
+    shapeClarity       = Math.max(50, Math.round((variance/20)*100));
+    // Enhancement potential: divergence from oval baseline
     const lToCheek     = m["Face Length"] / m["Cheekbone Width"];
     const divergence   = Math.abs(lToCheek - 1.2);
-    enhancementPotential = Math.min(50, Math.max(5, Math.round(divergence*60+15)));
+    enhancementPotential = Math.max(50, Math.round(divergence * 120 + 50));
   } else {
-    symmetryScore        = Math.floor(Math.random()*15)+22;
-    shapeClarity         = Math.floor(Math.random()*15)+20;
-    enhancementPotential = Math.floor(Math.random()*15)+24;
+    // Fallback if no face detected
+    symmetryScore        = Math.floor(Math.random()*20)+50;
+    shapeClarity         = Math.floor(Math.random()*20)+50;
+    enhancementPotential = Math.floor(Math.random()*20)+50;
   }
 
   return {
@@ -431,6 +435,24 @@ export default function BeautyApp() {
       .then(()=>faceapi.nets.faceLandmark68TinyNet.loadFromUri("/models"))
       .then(()=>setModelsReady(true))
       .catch(()=>setModelsReady(false));
+
+    // If returning from Stripe payment, restore blueprint and show it
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("paid") === "true") {
+      try {
+        const savedAnalysis   = JSON.parse(sessionStorage.getItem("lumine_analysis"));
+        const savedFaceShape  = JSON.parse(sessionStorage.getItem("lumine_faceShape"));
+        const savedAnswers    = JSON.parse(sessionStorage.getItem("lumine_answers"));
+        if (savedAnalysis) {
+          setAnalysis(savedAnalysis);
+          setFaceShape(savedFaceShape);
+          setAnswers(savedAnswers || {});
+          setStage("blueprint");
+          // Clean up URL
+          window.history.replaceState({}, "", window.location.pathname);
+        }
+      } catch(e) { console.error("Could not restore session:", e); }
+    }
   },[]);
 
   const runFaceDetection = useCallback(async(imgEl)=>{
@@ -485,7 +507,12 @@ export default function BeautyApp() {
   };
 
   const handlePayment=()=>{
-    window.open("https://buy.stripe.com/test_eVq00lfzI8WO4TTbZofw400","_blank");
+    // Save blueprint data to sessionStorage so we can restore it after redirect
+    sessionStorage.setItem("lumine_analysis", JSON.stringify(analysis));
+    sessionStorage.setItem("lumine_faceShape", JSON.stringify(faceShape));
+    sessionStorage.setItem("lumine_answers", JSON.stringify(answers));
+    const successUrl = encodeURIComponent(window.location.origin + "?paid=true");
+    window.location.href = `https://buy.stripe.com/test_eVq00lfzI8WO4TTbZofw400?success_url=${successUrl}`;
   };
 
   const stageIndex={landing:0,quiz:1,upload:2,scanning:2,results:3,payment:4,processing:4,blueprint:5};
@@ -670,8 +697,8 @@ export default function BeautyApp() {
                   <div className="metric-icon">{m.emoji}</div>
                   <div className="metric-body">
                     <div className="metric-label">{m.label}</div>
-                    <div className="metric-value">{m.value}/50</div>
-                    <div className="metric-bar"><div className="metric-bar-fill" style={{width:`${(m.value/50)*100}%`,transition:"width 1.2s ease .5s"}}/></div>
+                    <div className="metric-value">{m.value}/100</div>
+                    <div className="metric-bar"><div className="metric-bar-fill" style={{width:`${m.value}%`,transition:"width 1.2s ease .5s"}}/></div>
                   </div>
                 </div>
               ))}
